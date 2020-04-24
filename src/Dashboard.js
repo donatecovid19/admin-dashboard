@@ -8,6 +8,6 @@ export default () => (
     <Card>
         <Title title="Home" />
         <CardHeader title="Fight COVID-19 Dashboard" />
-        <CardContent>WIP</CardContent>
+        <CardContent>This is where the analytics stuff will go. This is the homepage!</CardContent>
     </Card>
 );

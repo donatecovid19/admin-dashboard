@@ -17,13 +17,13 @@ const dataProvider = base64Uploader(RestProvider(firebaseConfig, { trackedResour
 
 const MyLoginPage = () => (
   <Login
-    backgroundImage="https://donatecovid19.org/images/logo.png"
+    backgroundImage="https://donatecovid19.org/img/logo.png"
   />
 );
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark', // Switching the dark mode on is a single property value change.
+    type: 'light', // Switching the dark mode on is a single property value change.
   },
 });
 
