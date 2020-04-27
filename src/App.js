@@ -1,6 +1,10 @@
 import React from 'react';
 import { Admin, Resource, Login } from 'react-admin';
-import { RestProvider, AuthProvider, base64Uploader } from 'ra-data-firestore-client';
+import {
+  FirebaseAuthProvider,
+  FirebaseDataProvider,
+  FirebaseRealTimeSaga
+} from 'react-admin-firebase'
 
 import PostIcon from '@material-ui/icons/Book';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -12,8 +16,13 @@ import { UserList, UserEdit, UserCreate } from './users';
 
 const firebaseConfig = require('./config.json');
 
-const trackedResources = [{ name: 'donation-links' }, { name: 'users' }];
-const dataProvider = base64Uploader(RestProvider(firebaseConfig, { trackedResources }));
+const options = {
+  logging: true,
+  watch: ['donation-links', 'users']
+}
+
+const dataProvider = FirebaseDataProvider(firebaseConfig, options);
+const authProvider = FirebaseAuthProvider(firebaseConfig, options);
 
 const MyLoginPage = () => (
   <Login
@@ -27,17 +36,12 @@ const theme = createMuiTheme({
   },
 });
 
-const authConfig = {
-  userProfilePath: '/users/',
-  userAdminProp: 'isAdmin'
-};
-
 const App = () => (
   <Admin theme={theme}
     loginPage={MyLoginPage}
     dashboard={Dashboard}
     dataProvider={dataProvider}
-    authProvider={AuthProvider(authConfig)}>
+    authProvider={authProvider}>
     <Resource name="donation-links" options={{ label: 'Donation Links' }} list={LinkList} edit={LinkEdit} create={LinkCreate} icon={PostIcon} />
     <Resource name="users" list={UserList} edit={UserEdit} create={UserCreate} />
   </Admin>
